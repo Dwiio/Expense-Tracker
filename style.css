@@ -1,0 +1,743 @@
+/* =========================================================
+   Personal Finance & Expense Tracker App
+   Tema: Cream & Blue — modern, clean, responsive
+   ========================================================= */
+
+:root {
+  --bg-page: #f7f0e4;
+  --bg-page-deep: #efe3d0;
+  --bg-card: #fffdf8;
+  --bg-card-soft: #fbf7ef;
+
+  --text-dark: #17324d;
+  --text-muted: #6f7f8f;
+  --text-soft: #8b7e6c;
+
+  --accent-blue: #2563eb;
+  --accent-blue-dark: #1746ad;
+  --accent-blue-light: #eaf1ff;
+  --accent-blue-soft: #f3f7ff;
+
+  --color-income: #16845b;
+  --bg-income: #e8f7ef;
+  --color-expense: #c84b4b;
+  --bg-expense: #fff0ee;
+
+  --border-light: #e7dccb;
+  --border-blue: #cbdafa;
+
+  --shadow-soft: 0 14px 40px rgba(76, 59, 38, 0.08);
+  --shadow-blue: 0 18px 42px rgba(37, 99, 235, 0.14);
+
+  --font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --card-radius: 22px;
+  --card-padding: 24px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 4%, rgba(37, 99, 235, 0.08), transparent 28rem),
+    radial-gradient(circle at 92% 18%, rgba(232, 199, 151, 0.2), transparent 25rem),
+    var(--bg-page);
+  color: var(--text-dark);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  padding: 1.5rem;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2);
+  outline-offset: 2px;
+}
+
+.tracker-app {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tracker-app main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.15rem;
+}
+
+.tracker-header__title {
+  color: var(--text-dark);
+  font-size: clamp(1.45rem, 3vw, 1.8rem);
+  font-weight: 850;
+  letter-spacing: -0.05em;
+}
+
+.tracker-header__title span {
+  color: var(--accent-blue) !important;
+}
+
+.tracker-header__user {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.tracker-header__user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.tracker-header__greeting {
+  font-size: 0.92rem;
+  color: var(--text-dark);
+}
+
+.tracker-header__greeting strong {
+  font-weight: 750;
+}
+
+.tracker-header__date {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.tracker-header__avatar {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-blue);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, var(--accent-blue-light));
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+  font-size: 1.15rem;
+}
+
+/* =========================================================
+   SHARED CARDS
+   ========================================================= */
+
+.tracker-summary__balance,
+.tracker-summary__stat,
+.tracker-form-section__card,
+.tracker-search,
+.tracker-transaction-list {
+  min-width: 0;
+  background: rgba(255, 253, 248, 0.92);
+  border: 1px solid var(--border-light);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.tracker-summary {
+  display: grid;
+  grid-template-columns: 2fr 1.25fr 1.25fr;
+  gap: 1rem;
+}
+
+.tracker-summary__balance,
+.tracker-summary__stat {
+  min-height: 164px;
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+}
+
+.tracker-summary__balance {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  border-color: rgba(37, 99, 235, 0.35);
+  background:
+    radial-gradient(circle at 90% 20%, rgba(255,255,255,0.2), transparent 8rem),
+    linear-gradient(135deg, #1746ad, #2563eb 58%, #4b82f2);
+  box-shadow: var(--shadow-blue);
+}
+
+.tracker-summary__balance::after {
+  content: "";
+  position: absolute;
+  right: -42px;
+  bottom: -62px;
+  width: 180px;
+  height: 180px;
+  border: 24px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.tracker-summary__label {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.7rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.tracker-summary__balance .tracker-summary__label {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.tracker-summary__balance-amount,
+.tracker-summary__stat-amount {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
+}
+
+.tracker-summary__balance-amount {
+  font-size: clamp(2rem, 5vw, 3.45rem);
+  font-weight: 850;
+}
+
+.tracker-summary__balance-amount--negative {
+  color: #ffe0db;
+}
+
+.tracker-summary__stat {
+  justify-content: space-between;
+}
+
+.tracker-summary__stat:first-of-type {
+  background: linear-gradient(145deg, #fffdf8, #f2faf5);
+}
+
+.tracker-summary__stat:last-of-type {
+  background: linear-gradient(145deg, #fffdf8, #fff4f0);
+}
+
+.tracker-summary__stat-amount {
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  font-weight: 800;
+}
+
+.tracker-summary__stat-amount--income {
+  color: var(--color-income);
+}
+
+.tracker-summary__stat-amount--expense {
+  color: var(--color-expense);
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.tracker-form-section__card {
+  padding: var(--card-padding);
+}
+
+.tracker-form-section__heading {
+  margin-bottom: 1.15rem;
+  color: var(--text-dark);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.tracker-form-section__heading::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 22px;
+  margin-right: 0.65rem;
+  vertical-align: -5px;
+  border-radius: 99px;
+  background: var(--accent-blue);
+}
+
+.tracker-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 0.85rem;
+  align-items: end;
+}
+
+.tracker-form__field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.tracker-form__label {
+  color: var(--text-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.tracker-form__input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.75rem 0.9rem;
+  color: var(--text-dark);
+  border: 1px solid var(--border-light);
+  border-radius: 13px;
+  background: #fffdfa;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.tracker-form__input::placeholder {
+  color: #aaa092;
+}
+
+.tracker-form__input:hover {
+  border-color: #cfc1ae;
+}
+
+.tracker-form__input:focus {
+  border-color: var(--accent-blue);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.09);
+}
+
+.tracker-form__submit {
+  min-height: 46px;
+  padding: 0.75rem 1.3rem;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--accent-blue), #1746ad);
+  color: #fff;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 9px 18px rgba(37, 99, 235, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.tracker-form__submit:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 22px rgba(37, 99, 235, 0.24);
+  transform: translateY(-1px);
+}
+
+.tracker-form__submit:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.tracker-search {
+  padding: 1rem;
+}
+
+.tracker-search__form {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.tracker-search__form .tracker-form__input {
+  flex: 1;
+  background: #fffdfa;
+}
+
+.tracker-search__submit {
+  min-width: 88px;
+  padding: 0 1.2rem;
+  border: 1px solid var(--border-blue);
+  border-radius: 13px;
+  background: var(--accent-blue-light);
+  color: var(--accent-blue-dark);
+  font-weight: 750;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.tracker-search__submit:hover {
+  background: #dce8ff;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   HISTORY / LIST
+   ========================================================= */
+
+.tracker-history {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tracker-history__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.tracker-transaction-list {
+  min-height: 220px;
+  padding: 1.25rem;
+}
+
+.tracker-transaction-list__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+
+.tracker-transaction-list__title {
+  color: var(--text-dark);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.tracker-transaction-list:first-child .tracker-transaction-list__title::before {
+  background: var(--color-income);
+}
+
+.tracker-transaction-list:last-child .tracker-transaction-list__title::before {
+  background: var(--color-expense);
+}
+
+.tracker-transaction-list__title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 0.5rem 1px 0;
+  border-radius: 50%;
+}
+
+.tracker-transaction-list__container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   TRANSACTION CARD
+   ========================================================= */
+
+.tracker-transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 0.25rem;
+  border-bottom: 1px solid #eee5d8;
+  animation: transactionIn 0.2s ease both;
+}
+
+.tracker-transaction-item:last-child {
+  border-bottom: 0;
+}
+
+@keyframes transactionIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tracker-transaction-item__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.tracker-transaction-item__icon--income {
+  color: var(--color-income);
+  background: var(--bg-income);
+}
+
+.tracker-transaction-item__icon--expense {
+  color: var(--color-expense);
+  background: var(--bg-expense);
+}
+
+.tracker-transaction-item__detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.tracker-transaction-item__title {
+  overflow: hidden;
+  color: var(--text-dark);
+  font-size: 0.93rem;
+  font-weight: 750;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tracker-transaction-item__date {
+  margin-top: 0.18rem;
+  color: var(--text-muted);
+  font-size: 0.73rem;
+}
+
+.tracker-transaction-item__right {
+  display: flex;
+  min-width: 160px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.tracker-transaction-item__amount {
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+.tracker-transaction-item__amount--income {
+  color: var(--color-income);
+}
+
+.tracker-transaction-item__amount--expense {
+  color: var(--color-expense);
+}
+
+.tracker-transaction-item__type {
+  padding: 0.16rem 0.45rem;
+  border-radius: 99px;
+  font-size: 0.65rem;
+  font-weight: 750;
+}
+
+.tracker-transaction-item__type--income {
+  color: var(--color-income);
+  background: var(--bg-income);
+}
+
+.tracker-transaction-item__type--expense {
+  color: var(--color-expense);
+  background: var(--bg-expense);
+}
+
+.tracker-transaction-item__actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.1rem;
+}
+
+.tracker-transaction-item__btn {
+  padding: 0.32rem 0.48rem;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: #fffdf9;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+
+.tracker-transaction-item__btn:hover {
+  border-color: var(--border-blue);
+  background: var(--accent-blue-light);
+  color: var(--accent-blue-dark);
+}
+
+.tracker-transaction-item__btn--delete:hover {
+  border-color: #f2c4bd;
+  background: var(--bg-expense);
+  color: var(--color-expense);
+}
+
+.tracker-empty-state {
+  padding: 1.5rem 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-style: italic;
+  text-align: center;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.tracker-footer {
+  margin-top: 0.2rem;
+  padding: 1rem 0 0.4rem;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  text-align: center;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .tracker-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tracker-summary__balance {
+    grid-column: span 2;
+  }
+
+  .tracker-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tracker-form__field:first-child {
+    grid-column: span 2;
+  }
+
+  .tracker-form__submit {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    padding: 1rem;
+  }
+
+  .tracker-history__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 620px) {
+  body {
+    padding: 0.7rem;
+  }
+
+  .tracker-header {
+    align-items: flex-start;
+  }
+
+  .tracker-header__user-info {
+    display: none;
+  }
+
+  .tracker-header__avatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .tracker-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .tracker-summary__balance {
+    grid-column: span 1;
+    min-height: 150px;
+  }
+
+  .tracker-summary__stat {
+    min-height: 130px;
+  }
+
+  .tracker-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tracker-form__field:first-child,
+  .tracker-form__submit {
+    width: 100%;
+  }
+
+  .tracker-form__submit {
+    margin-top: 0.1rem;
+  }
+
+  .tracker-search__form {
+    flex-direction: column;
+  }
+
+  .tracker-search__submit {
+    min-height: 46px;
+  }
+
+  .tracker-transaction-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .tracker-transaction-item__right {
+    width: calc(100% - 52px);
+    min-width: 0;
+    margin-left: 52px;
+    align-items: stretch;
+  }
+
+  .tracker-transaction-item__actions {
+    justify-content: stretch;
+  }
+
+  .tracker-transaction-item__btn {
+    flex: 1;
+    min-height: 38px;
+  }
+}
