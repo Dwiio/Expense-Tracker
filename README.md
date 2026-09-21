@@ -3,6 +3,8 @@
 Aplikasi pencatat keuangan pribadi untuk submission kelas **Belajar Front-End Web Pemula — Dicoding**.
 https://expensetrackerdwio.netlify.app
 
+sertifikat: https://www.dicoding.com/certificates/RVZKMLM4NXD5
+
 ## Identitas
 
 - **Nama:** Dwirizki Adithya Putra
